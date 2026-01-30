@@ -19,7 +19,10 @@ export default function PostProvider({ children }){
     }
     fetchPosts();
    
+
   },[]);
+
+  console.log(state)
   return(
     <PostContext.Provider value={{ state, dispatch }}>
       {children}

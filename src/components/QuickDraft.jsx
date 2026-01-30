@@ -1,29 +1,30 @@
-import { useEffect, useState } from "react";
+import { useRef } from "react";
 import api from "../api/axios";
 
 export default function QuickDraft(){
-  const [formData, setFormData] = useState({
-    title: "",
-    content: "",
-    status: "Draft"
-  });
-
-    const handleChange = (e) => {
-      const { name, value} = e.target;
-      setFormData(prev => ({...prev, [name]: value}));
-    }
+  const titleRef = useRef(null);
+  const contentRef= useRef(null);
+  const statusRef = useRef("Draft");
+    
 
     const handleSubmit = async(e) =>{
       e.preventDefault();
+      
+      const payload = {
+        title: titleRef.current.value,
+        content: contentRef.current.value,
+        status: statusRef.current
+      }
 
       try{
-        const res = await api.post("/v1/posts", formData);
-        setFormData({ title: "", content: "" });
+        const res = await api.post("/v1/posts", payload);
+        
       }catch(err){
         console.error("Failed to save draft.", err);
       }
 
-
+      titleRef.current.value = "";
+      contentRef.current.value = "";
     }
 
 
@@ -33,12 +34,12 @@ export default function QuickDraft(){
       <form onSubmit={handleSubmit}>
         <div className="input-field">
           <label htmlFor="title">TITLE</label>
-          <input type="text" name="title" value={formData.title} placeholder="Draft Title" onChange={handleChange} />
+          <input type="text" name="title"  ref={titleRef} placeholder="Draft Title"  />
         </div>
 
         <div className="input-field">
           <label htmlFor="content">CONTENT</label>
-          <textarea name="content" value={formData.content} id="" placeholder="What's on your mind?" onChange={handleChange}></textarea>
+          <textarea name="content" ref={contentRef} id="" placeholder="What's on your mind?"></textarea>
         </div>
 
         <button type="submit">Save Draft</button>

@@ -7,17 +7,14 @@ import Sidebar from "../components/Sidebar";
 
 export default function Dashboard(){
   return(
-    <div className="flex min-h-screen w-full h-full">
-      <Sidebar/>
-      <div className="w-full h-full">
-        <AdminNavbar/> 
-          
-          <DashboardStats/>
-          <div className="flex px-8 gap-4">
-            <RecentActivity/>
-            <QuickDraft/>
-          </div>
+  <div>
+      
+      <DashboardStats/>
+      <div className="flex px-8 gap-4">
+        <RecentActivity/>
+        <QuickDraft/>
       </div>
-    </div>
+  </div>
+
   );
 }

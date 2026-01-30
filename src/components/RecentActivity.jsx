@@ -22,7 +22,7 @@ export default function RecentActivity(){
   return(
     <div className="recent-activity">
       <h2 className="mb-4 text-2xl font-semibold">Recent Activity</h2>
-      <div className="relative overflow-x-auto bg-neutral-primary-soft shadow-xs rounded-md border border-gray-300">
+      <div className="relative overflow-x-auto bg-neutral-primary-soft shadow rounded-md border border-gray-300">
           <table className="w-full text-sm text-left rtl:text-right text-body">
               <thead className="text-sm text-body bg-neutral-secondary-soft border-b rounded-base border-default">
                   <tr>
