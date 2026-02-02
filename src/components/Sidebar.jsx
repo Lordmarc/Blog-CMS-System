@@ -19,7 +19,7 @@ export default function Sidebar() {
     navigate("/");
   };
   return (
-    <div className="sidebar">
+    <div className="sidebar flex flex-col items-start justify-center w-full max-w-64 p-4 h-full  bg-white border-r border-r-gray-300">
       <div className="flex items-center gap-2">
         <div className="p-2 h-auto rounded-md bg-[#001BB7] text-white font-semibold shadow-[#001BB7] shadow-sm">
           <VscTerminalCmd className="text-2xl" />

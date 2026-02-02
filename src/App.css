@@ -36,11 +36,40 @@
 /* Section content */
 
 .section{
-  @apply w-full max-w-7xl py-12;
+  @apply w-full mx-auto max-w-7xl py-12;
+}
+
+
+/* Post Card */
+
+.post-card{
+  @apply flex flex-col rounded-md shadow-md min-h-96 overflow-hidden;
+}
+
+.post-card-description{
+  @apply p-4 flex flex-col flex-1;
+
+  .title{
+    @apply text-2xl font-semibold;
+  }
+
+  .content{
+    @apply text-gray-600;
+  }
+
+  .pf-image{
+    @apply h-full w-full;
+  }
+
+  .profile-info{
+    @apply flex  items-center justify-between mt-auto; 
+  }
 }
 
 /* Login content */
-
+.login-container{
+  @apply h-full w-full my-auto flex justify-center items-center;
+}
 .login{
   @apply bg-white flex flex-col  justify-center items-center w-full max-w-sm p-4 rounded-lg shadow-lg gap-2;
 
@@ -60,7 +89,7 @@
 /* Sidebar content */
 
 .sidebar{
-  @apply flex flex-col items-start justify-center w-full max-w-64 p-4 h-full min-h-screen bg-white border-r border-r-gray-300;
+  
 
   ul{
     @apply mt-8 
@@ -128,7 +157,7 @@
 
 /* Post section */
 .manage-posts{
-  @apply p-8 flex flex-col h-full w-full;
+  @apply p-8  flex flex-col h-full w-full;
 
   .heading{
     @apply w-full flex items-center;
@@ -141,7 +170,7 @@
       @apply text-gray-500
     }
 
-    button{
+    .create-post{
       @apply ml-auto max-w-32 w-full inline-flex place-items-center place-content-center gap-1 bg-[#001BB7] rounded-md text-white p-2
     }
   }
@@ -170,6 +199,54 @@
 
   td{
     @apply px-5 py-2 border-b border-y border-gray-300
+  }
+
+
+}
+
+  /* Create Post */
+
+.post-form{
+  @apply flex w-full h-full p-8;
+
+
+  form{
+    @apply flex gap-4 w-full max-w-7xl mx-auto ;
+  }
+  input,textarea{
+    @apply bg-transparent outline-none
+  }
+
+  input{
+    @apply text-5xl w-full
+  } 
+  textarea{
+    @apply h-96 w-full resize-none overflow-hidden;
+  }
+
+  .post-setting{
+    @apply flex flex-col w-64 max-h-[450px] bg-white p-4 rounded-md border-gray-300 border;
+  }
+
+  .preview-image{
+    @apply  border-2 rounded-md border-dashed flex items-center justify-center h-40 text-gray-500  text-lg;
+    
+  }
+
+  .upload-content{
+    @apply flex flex-col items-center gap-2;
+  }
+
+  .preview-img{
+    @apply w-full h-full object-cover rounded-lg;
+  }
+
+  .tags{
+    @apply text-base border border-gray-300 rounded-md p-2;
+  }
+
+  .published-btn{
+     @apply mt-auto w-full inline-flex place-items-center place-content-center gap-1 bg-[#001BB7] rounded-md text-white p-2
   }
 }
 

@@ -3,6 +3,8 @@ import { FaPlus } from "react-icons/fa6";
 import { PostContext } from "../posts/PostProvider";
 import PostNav from "./PostNav";
 import PostTable from "./PostTable";
+import { Link } from "react-router-dom";
+
 
 export default function ManagePosts() {
   const { state, dispatch } = useContext(PostContext);
@@ -47,10 +49,12 @@ export default function ManagePosts() {
           <h2>Posts</h2>
           <p>Manage your blog articles and publications.</p>
         </div>
-        <button>
+        <Link 
+          className="create-post"
+          to="create-post">
           <FaPlus />
           New Post
-        </button>
+        </Link>
       </div>
 
       <PostNav buttons={buttons} active={active} search={search} navTab={handleClick} setSearch={setSearch}/>

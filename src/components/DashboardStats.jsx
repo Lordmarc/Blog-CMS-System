@@ -7,6 +7,7 @@ import { MdOutlinePublishedWithChanges } from "react-icons/md";
 import { RiDraftFill } from "react-icons/ri";
 import Card from "./Card";
 import { PostContext } from "../posts/PostProvider";
+import { Link } from "react-router-dom";
 
 
 export default function DashboardStats(){
@@ -21,10 +22,10 @@ export default function DashboardStats(){
         </div>
         <div className="ml-auto flex items-center gap-2">
           <button className="bg-white">Export Data</button>
-          <button className="inline-flex place-items-center bg-[#001BB7] text-white">
+          <Link to="create-post" className="inline-flex place-items-center bg-[#001BB7] text-white">
             <GoPlus/>
             New Post
-          </button>
+          </Link>
         </div>
       </div>
 

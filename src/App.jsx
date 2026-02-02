@@ -11,6 +11,7 @@ import BlogList from './pages/BlogList';
 import { useContext } from 'react'
 import { AuthContext } from './auth/AuthProvider'
 import AdminPage from './pages/AdminPage'
+import SinglePost from './components/SinglePost'
 
 function App() {
 const {state} = useContext(AuthContext);
@@ -32,7 +33,10 @@ const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
               </>} />
             <Route path="/login" element={<Login/>}/>
             <Route path="/register" element={<Register/>}/>
+
             <Route path='/blog' element={<BlogList/>}/>
+            <Route path='/blog/:slug' element={<SinglePost/>}/>
+
             <Route path="/dashboard/*" element={<AdminPage/>}/>
           </Routes>
         </div>

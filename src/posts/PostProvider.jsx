@@ -19,7 +19,7 @@ export default function PostProvider({ children }){
     }
     fetchPosts();
    
-
+ 
   },[]);
 
   console.log(state)
