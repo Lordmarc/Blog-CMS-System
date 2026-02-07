@@ -14,5 +14,11 @@ export default function ProtectedRoute({ children }){
     return <Navigate to="/login" />
   }
 
+  if(state.user.role !== "admin"){
+    return <Navigate to="/"/>
+  }
+
+
+
   return children;
 }

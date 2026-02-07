@@ -1,4 +1,5 @@
 export const initialState = {
+
   totalUsers: 0,
   activeUsers: 0,
 };

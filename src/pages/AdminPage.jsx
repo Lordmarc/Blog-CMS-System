@@ -6,7 +6,7 @@ import ManagePosts from "../components/ManagePosts";
 import PostForm from "../components/PostForm";
 
 export default function AdminPage(){
-
+  
   return(
      <div className="flex min-h-screen w-full">
 

@@ -5,7 +5,12 @@ import { AuthContext } from "../auth/AuthProvider";
 
 export default function Navbar(){
   const { state, dispatch } = useContext(AuthContext);
- 
+  
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" })
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
   return(
     <nav className="navbar-wrapper">
       <div className="navbar">
@@ -22,7 +27,7 @@ export default function Navbar(){
           <li><Link to="/blog">Blog</Link></li>
           {state.isAuthenticated ? (
             <>
-              <li className="cursor-pointer" onClick={() => dispatch({ type: "LOGOUT" })}>Logout</li>
+              <li className="cursor-pointer" onClick={handleLogout}>Logout</li>
             </>
           ): (
             <>

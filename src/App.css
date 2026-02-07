@@ -13,7 +13,7 @@
 /* //Navbar content */
 .navbar-wrapper {
   @apply flex items-center w-full  text-[#111827]  h-16 bg-white border-b border-gray-300;
-
+ 
   .navbar{
     @apply flex items-center w-full max-w-7xl mx-auto
   }
@@ -29,7 +29,7 @@
 /* Headings content */
 
 .headings{
-  @apply bg-[#001BB7] w-full max-w-7xl mx-auto rounded-lg h-[450px] flex flex-col items-center justify-center gap-6 bg-cover bg-center bg-no-repeat p-8 text-center;
+  @apply bg-[#001BB7] w-full max-w-7xl mx-auto rounded-lg h-[450px] flex flex-col items-center justify-center gap-6 bg-cover mt-12 bg-center bg-no-repeat p-8 text-center;
 }
 
 
@@ -257,3 +257,10 @@
     @apply flex gap-2
   }
 }
+
+  .user-comment {
+    @apply flex mt-8;
+  }
+
+ 
+

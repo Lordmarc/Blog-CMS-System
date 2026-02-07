@@ -12,6 +12,8 @@ import { useContext } from 'react'
 import { AuthContext } from './auth/AuthProvider'
 import AdminPage from './pages/AdminPage'
 import SinglePost from './components/SinglePost'
+import ProtectedRoute from './routes/ProtectedRoute'
+import Breadcrumb from './components/Breadcrumb'
 
 function App() {
 const {state} = useContext(AuthContext);
@@ -23,7 +25,7 @@ const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
       <div className='body'>
         {showNavbar && <Navbar/>}
         <div className='flex-1  h-full flex flex-col'>
-     
+
           <Routes>
             <Route path='/' element={
               <>
@@ -37,7 +39,15 @@ const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
             <Route path='/blog' element={<BlogList/>}/>
             <Route path='/blog/:slug' element={<SinglePost/>}/>
 
-            <Route path="/dashboard/*" element={<AdminPage/>}/>
+
+               <Route path="/dashboard/*" element={
+                <ProtectedRoute>
+                    <AdminPage/>
+                </ProtectedRoute>
+           
+                }/>
+
+           
           </Routes>
         </div>
        
