@@ -1,6 +1,6 @@
 import Pagination from "./pagination";
 
-export default function PostTable({ state, totalPosts, currentPosts, firstIndex, lastIndex, currentPage, handleCurrentPage,totalPages }){
+export default function PostTable({ totalPosts, currentPosts, firstIndex, lastIndex, currentPage, handleCurrentPage,totalPages }){
   return(
     <div className="relative overflow-x-auto bg-white shadow rounded border border-gray-300">
         <table className="w-full text-sm text-left rtl:text-right text-body">

@@ -18,7 +18,7 @@ export default function PostProvider({ children }){
       }
     }
     fetchPosts();
-   
+    
  
   },[]);
 

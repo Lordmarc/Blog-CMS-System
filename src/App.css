@@ -259,7 +259,7 @@
 }
 
   .user-comment {
-    @apply flex mt-8;
+    @apply flex mt-8 w-full;
   }
 
  

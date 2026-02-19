@@ -56,7 +56,7 @@ export default function ManagePosts() {
           New Post
         </Link>
       </div>
-
+ 
       <PostNav buttons={buttons} active={active} search={search} navTab={handleClick} setSearch={setSearch}/>
 
       <PostTable 

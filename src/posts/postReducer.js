@@ -5,7 +5,7 @@ export const initialState = {
   published: 0,
   drafts: 0,
 }
-
+ 
 export function postsReducer(state, action){
   switch(action.type){
     case "SET_POSTS":

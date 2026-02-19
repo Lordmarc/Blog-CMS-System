@@ -1,3 +1,5 @@
+import { GrNext } from "react-icons/gr";
+import { GrPrevious } from "react-icons/gr";
 
 export default function Pagination({ firstIndex, lastIndex, currentPage, handleCurrentPage, totalPages, totalPosts, }){
 
@@ -5,7 +7,7 @@ export default function Pagination({ firstIndex, lastIndex, currentPage, handleC
     currentPage === 1 ? handleCurrentPage(totalPages) : handleCurrentPage(prev => prev - 1);
    
   }
-
+ 
   const handleNext = () => {
   currentPage === totalPages ? handleCurrentPage(1) : handleCurrentPage( prev => prev + 1);
   }
@@ -13,7 +15,7 @@ export default function Pagination({ firstIndex, lastIndex, currentPage, handleC
     <div className="pagination">
       <p>Showing {firstIndex + 1} - {Math.min(lastIndex, totalPosts)} of {totalPosts} results</p>
       <div className="btns">
-        <button className="px-3 py-1 border rounded" onClick={handlePrev}>Prev</button>
+        <button className="px-3 py-1 border rounded bg-white" onClick={handlePrev}><GrPrevious/></button>
          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
             <button
               key={page}
@@ -21,7 +23,7 @@ export default function Pagination({ firstIndex, lastIndex, currentPage, handleC
               className={`px-3 py-1 border rounded ${currentPage === page ? "bg-blue-500 text-white" : "bg-white text-black"}`}
             >{page}</button>
           ))}
-          <button className="px-3 py-1 border rounded" onClick={handleNext}>Next</button>
+          <button className="px-3 py-1 border rounded bg-white" onClick={handleNext}><GrNext/></button>
       </div>
          
     </div>
