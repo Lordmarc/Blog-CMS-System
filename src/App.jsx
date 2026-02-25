@@ -14,6 +14,7 @@ import AdminPage from './pages/AdminPage'
 import SinglePost from './components/SinglePost'
 import ProtectedRoute from './routes/ProtectedRoute'
 import Breadcrumb from './components/Breadcrumb'
+import Footer from './components/Footer'
 
 function App() {
 const {state} = useContext(AuthContext);
@@ -24,7 +25,7 @@ const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
 
       <div className='body'>
         {showNavbar && <Navbar/>}
-        <div className='flex-1  h-full flex flex-col'>
+        <div className='flex-1 p-4 md:p-0 h-full flex flex-col'>
 
           <Routes>
             <Route path='/' element={
@@ -50,7 +51,7 @@ const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
            
           </Routes>
         </div>
-       
+       <Footer/>
       </div>
 
 

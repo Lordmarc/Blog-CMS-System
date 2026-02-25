@@ -8,16 +8,16 @@ export default function Header() {
       }}
     >
       <div className="flex flex-col items-center justify-center gap-4">
-        <h2 className="text-6xl font-semibold text-white block">Welcome to my Code & Thoughts</h2>
-        <p className="text-center text-xl text-gray-300 max-w-2xl">
+        <h2 className="text-4xl md:text-6xl font-semibold text-white block">Welcome to my Code & Thoughts</h2>
+        <p className="text-center text-lg md:text-xl text-gray-300 max-w-2xl">
           Exploring the world of full-stack development, clean architecture, and
           modern web technologies. Tips, tutorials, and deep dives.
         </p>
       </div>
 
       <div className="w-full max-w-xs flex gap-2">
-        <button className="flex items-center justify-center rounded-lg bg-[#1223e0] px-6 py-3 text-base font-bold text-white shadow-lg transition-all hover:translate-y-[-2px]">View All Posts</button>
-        <button className="flex items-center justify-center rounded-lg bg-white/10 px-6 py-3 text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20">
+        <button className="flex-1 flex items-center justify-center rounded-lg bg-[#1223e0] px-2 py-1 h-12 md:px-6 md:py-3 text-sm md:text-base font-bold text-white shadow-lg transition-all hover:translate-y-[-2px]">View All Posts</button>
+        <button className="flex-1 flex items-center justify-center rounded-lg bg-white/10 px-2 py-1 md:px-6 md:py-3 text-sm md:text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20">
                                 Subscribe </button>
       </div>
     </div>

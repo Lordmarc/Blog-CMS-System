@@ -19,7 +19,7 @@ export default function Section() {
         </label>
       </div>
       
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {state.allPosts.map(post => (
           <PostCard key={post.id} state={post}/>
         ))}

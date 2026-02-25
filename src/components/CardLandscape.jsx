@@ -19,12 +19,12 @@ export default function CardLandscape({ state }) {
             <p className="text-sm">John Doe</p>
           </div>
                <Link 
-
+                   to={`/blog/${state.slug}`}
                    className="flex justify-center items-center gap-1 text-[#001BB7]">
                    Read More
-                   <FaArrowRight/>
+                   <FaArrowRight/> 
                  </Link>
-        </div>
+      </div>
       </div>
     </div>
   );

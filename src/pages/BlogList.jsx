@@ -63,7 +63,7 @@ export default function BlogList(){
 
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-8 h-full">
           <div className="flex flex-col relative bg-white  max-h-24 p-4 rounded-md" ref={searchRef}>
             <p className="mb-2 font-semibold">SEARCH ARTICLES</p>
 
@@ -101,9 +101,9 @@ export default function BlogList(){
                   </div>
                 )}
               </div>
-              <div>
-                <p>POPULAR TAGS</p>
-                <div className="grid grid-cols-3 gap-4">
+              <div className="">
+                <p className="text-sm font-semibold">POPULAR TAGS</p>
+                <div className="grid grid-cols-3 gap-4 p-4">
                   {tags.map(tag => (
                     <div className="bg-slate-100 text-center p-1 text-sm rounded">{tag.name.toUpperCase().charAt(0) + tag.name.slice(1)}</div>
                   ))}
