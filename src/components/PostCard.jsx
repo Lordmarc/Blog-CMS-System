@@ -16,7 +16,7 @@ export default function PostCard({ state }){
       year: 'numeric'
     });
   };
-  return (
+  return ( 
     <div className="post-card">
       <div className="h-44 w-full">
           <img src={`${import.meta.env.VITE_BASE_URL}/storage/${state.image}`} alt="" className="h-full w-full object-cover"/>

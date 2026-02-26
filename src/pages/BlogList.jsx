@@ -4,6 +4,7 @@ import { PostContext } from "../posts/PostProvider";
 import Pagination from "../components/pagination";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import api from "../api/axios";
+import PostCard from "../components/PostCard";
 
 export default function BlogList(){
   const { state } = useContext(PostContext)
@@ -53,7 +54,7 @@ export default function BlogList(){
 
   console.log(tags);
   return(
-      <div className="max-w-6xl mx-auto px-4 py-10 flex justify-center gap-8 w-full">
+      <div className="max-w-6xl mx-auto px-4 py-10 flex flex-col-reverse md:flex-row justify-center gap-8 w-full">
         <div className="flex-1 flex flex-col gap-4 h-full w-full max-w-lg">
           { currentPosts.map(post => (
             <CardLandscape key={post.id} state={post} />
@@ -81,7 +82,7 @@ export default function BlogList(){
             </div>
 
             {open && (
-                <div className="absolute top-16 left-0 w-full bg-white border mt-1 rounded-lg shadow-lg z-50">
+                <div className="absolute top-20 left-0 w-full bg-white  mt-1 rounded-lg shadow-lg z-50">
                     {posts.length > 0 ? (
                       posts.slice(0, 5).map((post) => (
                         <p

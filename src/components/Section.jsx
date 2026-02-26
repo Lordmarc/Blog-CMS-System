@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import PostCard from "./PostCard";
 import { PostContext } from "../posts/PostProvider";
+import { Link } from "react-router-dom";
 
 export default function Section() {
     const {state} = useContext(PostContext);
@@ -24,6 +25,11 @@ export default function Section() {
           <PostCard key={post.id} state={post}/>
         ))}
       </div>
+      
+      <div className="w-full text-center mt-10">
+        <Link to="/blog" className="bg-white py-2 px-4 rounded-md text-slate-700 font-semibold">Load More</Link>
+      </div>
+      
     </div>
   );
 }
