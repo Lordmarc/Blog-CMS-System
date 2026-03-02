@@ -10,7 +10,7 @@ export default function PostProvider({ children }){
   useEffect(() => {
     const fetchPosts = async () => {
       try{
-        const res = await api.get('v1/posts');
+        const res = await api.get('/public/posts');
 
         dispatch({ type: "SET_POSTS", payload: res.data });
       }catch(err){

@@ -2,11 +2,13 @@ import { useContext, useState } from "react";
 import { LogsContext } from "../logs/LogsProvider";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { AuthContext } from "../auth/AuthProvider";
 
 dayjs.extend(relativeTime);
 
 export default function RecentActivity(){
-      const {state} = useContext(LogsContext);
+      const {state: logState} = useContext(LogsContext);
+      const {state: authState} = useContext(AuthContext);
       const [visibleCount, setVisibleCount] = useState(5);
       const [toggle, setToggle] = useState(false);
       const viewAll = () => {
@@ -18,7 +20,7 @@ export default function RecentActivity(){
         setToggle(!toggle);
       }
 
-      const visibleLogs = state.activity.slice(0,visibleCount);
+      const visibleLogs = logState.activity?.slice(0,visibleCount);
   return(
     <div className="recent-activity">
       <h2 className="mb-4 text-2xl font-semibold">Recent Activity</h2>

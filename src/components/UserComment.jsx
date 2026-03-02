@@ -5,7 +5,7 @@ import api from "../api/axios";
 
 dayjs.extend(relativeTime);
 
-export default function UserComment({ comment, refreshComments }) {
+export default function UserComment({ comment, refreshComments, state }) {
   const [showReply, setShowReply] = useState(false);
   const [replyText, setReplyText] = useState("");
 
@@ -13,10 +13,11 @@ export default function UserComment({ comment, refreshComments }) {
   const female = "/assets/female.jpg";
 
   const submitReply = async () => {
+    if(!state.isAuthenticated) return alert('Login first to comment');
     if (!replyText.trim()) return;
 
     try {
-      await api.post(`/v1/posts/${comment.post_id}/comment`, {
+      await api.post(`/public/posts/${comment.post_id}/comment`, {
         comment: replyText,
         parent_id: comment.id,
       });

@@ -29,7 +29,7 @@ export default function SinglePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await api.get(`v1/posts/${slug}`);
+        const res = await api.get(`/public/posts/slug/${slug}`);
         setPost(res.data);
       } catch (err) {
         setError(err.message || "Post not found");
@@ -45,7 +45,7 @@ export default function SinglePost() {
   const fetchComments = async () => {
     if (!post) return;
     try {
-      const res = await api.get(`/v1/posts/${post.id}/comments`);
+      const res = await api.get(`/public/posts/${post.id}/comments`);
       setComments(res.data);
     } catch (err) {
       console.error("Failed to fetch comments:", err);
@@ -133,7 +133,7 @@ export default function SinglePost() {
         {/* Comments List */}
         <div className="comments flex flex-col gap-4">
           {comments.map((c) => (
-            <UserComment key={c.id} comment={c} refreshComments={fetchComments} />
+            <UserComment key={c.id} comment={c} refreshComments={fetchComments} state={state}/>
           ))}
         </div>
       </div>
