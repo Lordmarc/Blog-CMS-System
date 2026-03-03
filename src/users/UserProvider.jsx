@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { initialState, userReducer } from "./userReducer";
 import api from "../api/axios";
 import { AuthContext } from "../auth/AuthProvider";
+import { supabase } from "../lib/supabase";
 
 export const UserContext = createContext();
 
@@ -14,9 +15,13 @@ export default function UserProvider({ children }){
 
     const fetchUser = async() => {
       try{
-      const res = await api.get('/v0/user-stats');
+      const { count,error } = await supabase.from("profiles")
+      .select("*", {count: "exact", head: true})
+      .eq("role", "user");
+ 
+      if(error) alert(error.message);
 
-      dispatch({ type: "SET_USERS", payload: res.data })
+      dispatch({ type: "SET_USERS", payload: count || 0 })
       }catch(err){
         console.error("Failed to fetch user stats:", err);
       }

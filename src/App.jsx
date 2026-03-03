@@ -13,49 +13,53 @@ import { AuthContext } from './auth/AuthProvider'
 import AdminPage from './pages/AdminPage'
 import SinglePost from './components/SinglePost'
 import ProtectedRoute from './routes/ProtectedRoute'
-import Breadcrumb from './components/Breadcrumb'
+
 import Footer from './components/Footer'
 
 function App() {
-const {state} = useContext(AuthContext);
+  const { state } = useContext(AuthContext);
+  console.log("Loading state:", state.loading);
+  // Show a loading spinner or placeholder while restoring auth
+  if (state.loading) {
+    return <p className="text-center mt-20 text-xl">Loading...</p>;
+  }
 
-const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
+  const showNavbar = !(state.isAuthenticated && state.user?.role === "admin");
 
   return (
-
-      <div className='body'>
-        {showNavbar && <Navbar/>}
-        <div className='flex-1 p-4 md:p-0 h-full flex flex-col'>
-
-          <Routes>
-            <Route path='/' element={
+    <div className="body">
+      {showNavbar && <Navbar />}
+      <div className="flex-1 p-4 md:p-0 h-full flex flex-col">
+        <Routes>
+          <Route
+            path="/"
+            element={
               <>
-                <Header/>
-                <Section/>
-                <BlogHomePage/>
-              </>} />
-            <Route path="/login" element={<Login/>}/>
-            <Route path="/register" element={<Register/>}/>
+                <Header />
+                <Section />
+                <BlogHomePage />
+              </>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
 
-            <Route path='/blog' element={<BlogList/>}/>
-            <Route path='/blog/:slug' element={<SinglePost/>}/>
+          <Route path="/blog" element={<BlogList />} />
+          <Route path="/blog/:slug" element={<SinglePost />} />
 
-
-               <Route path="/dashboard/*" element={
-                <ProtectedRoute>
-                    <AdminPage/>
-                </ProtectedRoute>
-           
-                }/>
-
-           
-          </Routes>
-        </div>
-       <Footer/>
+          <Route
+            path="/dashboard/*"
+            element={
+              <ProtectedRoute>
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
       </div>
-
-
-  )
+      <Footer />
+    </div>
+  );
 }
 
 export default App

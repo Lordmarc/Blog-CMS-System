@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 export default function DashboardStats(){
   const { state: userState } = useContext(UserContext);
   const { state: postState } = useContext(PostContext);
+  console.log("User State:", userState)
   return(
     <div className="dashboard-stats">
       <div className="flex w-full">

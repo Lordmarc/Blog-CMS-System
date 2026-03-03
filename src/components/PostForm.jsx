@@ -1,12 +1,16 @@
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import { LuImagePlus } from "react-icons/lu";
 import createReducer, { initialState } from "../posts/createReducer";
 import api from "../api/axios";
+import { uploadImage } from "../lib/helpers";
+import { supabase } from "../lib/supabase";
+import { AuthContext } from "../auth/AuthProvider";
 
 export default function PostForm() {
   const [state, dispatch] = useReducer(createReducer, initialState);
+  const { state: authState} = useContext(AuthContext);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e) => { 
     const file = e.target.files[0];
     if (!file) return;
 
@@ -19,28 +23,71 @@ export default function PostForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("1. handleSubmit called");
+    console.log("2. authState:", authState);
+    console.log("3. state:", state);
 
-    const formData = new FormData();
-    formData.append("title", state.title);
-    formData.append("content", state.content);
-
-    if (state.image) {
-      formData.append("image", state.image);
+    if (!authState?.isAuthenticated) {
+    alert("You must be logged in to post.");
+    return;
     }
+    console.log("4. passed auth check");  // ← add dito
+    console.log("5. state.image:", state.image);  // ← add dito
 
-    state.tags
-      .split(",")
-      .map(t => t.trim())
-      .filter(Boolean)
-      .forEach(tag => formData.append("tags[]", tag));
+
 
   try {
-      await api.post("/v1/posts", formData);
-      dispatch({ type: "RESET" });
-    } catch (error) {
-      if (error.response) {
-        console.log("Validation errors:", error.response.data);
+      console.log("6. inside try block"); 
+      let imageUrl = null;
+       console.log("7. checking image..."); 
+      if (state.image){
+            console.log("8. uploading image...");  // ← add
+    imageUrl = await uploadImage(state.image);
+    console.log("9. imageUrl result:", imageUrl); 
       }
+
+      const tagsArray = state.tags
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
+
+      const slug = state.title
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")   // remove special characters
+      .replace(/\s+/g, "-")            // spaces to dashes
+      .replace(/-+/g, "-");    
+
+      const { data: postData, error } = await supabase.from('posts').insert([
+        {
+          user_id: authState.user.id,
+          title: state.title,
+          content: state.content,
+          slug: slug,
+          image: imageUrl,
+          tags: tagsArray,
+        }
+      ]).select().single();
+      console.log("insert result:", postData, error);
+
+      if (error) throw error;
+
+      await supabase.from('activity_logs').insert([
+        {
+          type: 'Post',
+          action: 'Published',
+          description: state.title,
+          user_id: authState.user.id,
+          meta: {
+            post_id: postData.id
+          }
+        }
+      ])
+
+      dispatch({ type: "RESET" });
+      alert("Post created successfully!");
+    } catch (error) {
+        console.error("CATCH ERROR:", error);
     }
 
   };

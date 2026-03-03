@@ -4,7 +4,7 @@ export const initialState = {
   image: null,
   preview:  null,
   tags: "",
-}
+} 
 
 export default function createReducer(state, action){
   switch(action.type){

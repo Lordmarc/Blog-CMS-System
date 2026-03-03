@@ -15,12 +15,12 @@ export default function RecentActivity(){
         if (toggle){
           setVisibleCount(5);
         }else{
-          setVisibleCount(state.activity.length);
+          setVisibleCount(logState.activity.length);
         }
         setToggle(!toggle);
       }
 
-      const visibleLogs = logState.activity?.slice(0,visibleCount);
+      const visibleLogs = logState.activity?.slice(0,visibleCount) || [];
   return(
     <div className="recent-activity">
       <h2 className="mb-4 text-2xl font-semibold">Recent Activity</h2>
@@ -43,7 +43,7 @@ export default function RecentActivity(){
                   </tr>
               </thead>
               <tbody className="bg-white overflow-y-auto">
-                {visibleLogs.map(log => (
+                {visibleLogs?.map(log => (
                   <tr key={log.id} className="">
                     <td>
                       <div>
@@ -69,7 +69,7 @@ export default function RecentActivity(){
                 ))}
               </tbody>
           </table>
-          {state.activity  ? (<button className="w-full bg-white border-t border-gray-300 py-4 text-[#001BB7] font-bold" onClick={viewAll}>{toggle ? 'Show Less' : 'View All Activity'}</button>
+          {logState.activity  ? (<button className="w-full bg-white border-t border-gray-300 py-4 text-[#001BB7] font-bold" onClick={viewAll}>{toggle ? 'Show Less' : 'View All Activity'}</button>
           ) : (<p>No activity yet.</p>) }
             </div> 
     </div>

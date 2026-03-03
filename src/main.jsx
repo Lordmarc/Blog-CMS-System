@@ -9,9 +9,10 @@ import PostProvider from './posts/PostProvider.jsx'
 import LogsProvider from './logs/LogsProvider.jsx'
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-
     <AuthProvider>
+      <StrictMode>
+
+
       <UserProvider>
         <PostProvider>
           <LogsProvider>
@@ -21,7 +22,8 @@ createRoot(document.getElementById('root')).render(
           </LogsProvider>
         </PostProvider>
       </UserProvider>
-    </AuthProvider>
 
-  </StrictMode>,
+
+   </StrictMode>
+  </AuthProvider>
 )

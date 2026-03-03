@@ -7,9 +7,9 @@ export const initialState = {
 export function userReducer(state, action){
   switch(action.type){
     case "SET_USERS":
-      return {...state, totalUsers: action.payload.totalUsers, activeUsers: action.payload.activeUsers};
+      return {...state, totalUsers: action.payload};
     case "INCREMENT_USER":
-      return {...state, totalUser: state.totalUsers + 1};
+      return {...state, totalUsers: state.totalUsers + 1};
     default:
       return state;
   }
