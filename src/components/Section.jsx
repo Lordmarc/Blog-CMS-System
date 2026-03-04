@@ -21,7 +21,7 @@ export default function Section() {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {state.allPosts.map(post => (
+        {state.allPosts.slice(0,3).map(post => (
           <PostCard key={post.id} state={post}/>
         ))}
       </div>
@@ -30,6 +30,6 @@ export default function Section() {
         <Link to="/blog" className="bg-white py-2 px-4 rounded-md text-slate-700 font-semibold">Load More</Link>
       </div>
       
-    </div>
+    </div> 
   );
 }

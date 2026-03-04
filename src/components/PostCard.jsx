@@ -19,7 +19,7 @@ export default function PostCard({ state }){
   return ( 
     <div className="post-card">
       <div className="h-44 w-full">
-          <img src={`${import.meta.env.VITE_BASE_URL}/storage/${state.image}`} alt="" className="h-full w-full object-cover"/>
+          <img src={state.image} alt="" className="h-full w-full object-cover"/>
       </div> 
       <div className="post-card-description">
         <p className="title">{state.title}</p>
@@ -28,12 +28,12 @@ export default function PostCard({ state }){
        <div className="profile-info">
         <div className="flex justify-center items-center gap-2">
           <div className="rounded-full h-8 w-8">
-            {state.user.gender === "male" ? (
+            {state.user?.gender === "male" ? (
               <img className="pf-image" src={male} />
             ): (<img className="pf-image" src={female}/>)}
           </div>
           <div className="flex flex-col">
-            <p className="font-semibold ">{state.user.name}</p>
+            <p className="font-semibold ">{state.user?.name}</p>
             <p className="text-gray-600 text-sm">{formattedDate(state.created_at)}</p>
           </div>
           
