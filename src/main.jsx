@@ -1,19 +1,16 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import { BrowserRouter } from 'react-router-dom'
-import AuthProvider from './auth/AuthProvider.jsx'
-import UserProvider from './users/UserProvider.jsx'
-import PostProvider from './posts/PostProvider.jsx'
-import LogsProvider from './logs/LogsProvider.jsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import LogsProvider from "./activity/LogsProvider.js";
+import App from "./App.jsx";
+import AuthProvider from "./auth/AuthProvider.jsx";
+import "./index.css";
+import PostProvider from "./posts/PostProvider.jsx";
+import UserProvider from "./users/UserProvider.jsx";
 
-
-createRoot(document.getElementById('root')).render(
-    <AuthProvider>
-      <StrictMode>
-
-
+createRoot(document.getElementById("root")).render(
+  <AuthProvider>
+    <StrictMode>
       <UserProvider>
         <PostProvider>
           <LogsProvider>
@@ -23,8 +20,6 @@ createRoot(document.getElementById('root')).render(
           </LogsProvider>
         </PostProvider>
       </UserProvider>
-
-
-   </StrictMode>
-  </AuthProvider>
-)
+    </StrictMode>
+  </AuthProvider>,
+);
