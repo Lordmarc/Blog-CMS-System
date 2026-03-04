@@ -1,4 +1,4 @@
-import Pagination from "./pagination";
+import Pagination from "./Pagination";
 
 export default function PostTable({ totalPosts, currentPosts, firstIndex, lastIndex, currentPage, handleCurrentPage,totalPages }){
   return(
