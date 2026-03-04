@@ -8,6 +8,7 @@ import UserProvider from './users/UserProvider.jsx'
 import PostProvider from './posts/PostProvider.jsx'
 import LogsProvider from './logs/LogsProvider.jsx'
 
+
 createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <StrictMode>
