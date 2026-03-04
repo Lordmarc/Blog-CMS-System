@@ -2,15 +2,17 @@ import { useContext, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../auth/AuthProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
 
 export default function Register(){
   const { state, dispatch } = useContext(AuthContext);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShow, setIsShow] = useState(false);
 
+  const navigate = useNavigate();
 
 
   const showPassword = () => {
@@ -22,22 +24,34 @@ export default function Register(){
   console.log("handleRegister called"); 
  const { error } = await supabase.auth.signUp({
   email,
-  password
+  password,
+  options: {
+    data:{
+      name: name
+    }
+  }
 });
 
 
 
   // ✅ i-check muna ang error
-  if (error) {
-    alert(error.message);
-    return; // ✅ stop agad
+if (error) {
+  alert(error.message);
+  return;
+}
+
+console.log("Registration successful, about to navigate..."); // ← add
+setName("");
+setEmail("");
+setPassword("");
+
+await supabase.auth.signOut();
+console.log("Signed out, navigating to login..."); // ← add
+
+alert("Registration successful! Please login.");
+navigate("/login");
+
   }
-
-
-  alert("Check your email for confirmation!");
-};
-
-
   
 
   return(
@@ -47,6 +61,11 @@ export default function Register(){
           <div className="w-full text-center">
             <h2 className="text-2xl font-semibold">Create your account</h2>
           
+          </div>
+
+          <div className="login-input">
+            <label htmlFor="name">Name</label>
+            <input type="text" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="John Doe" required/>
           </div>
 
           <div className="login-input">

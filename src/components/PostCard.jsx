@@ -4,8 +4,7 @@ import { FaArrowRight } from "react-icons/fa6";
 
 export default function PostCard({ state }){
 
-  const male = "/assets/male.png";
-  const female = "/assets/female.jpg";
+
 
   const formattedDate = (dateString) => {
     const date = new Date(dateString);
@@ -28,9 +27,7 @@ export default function PostCard({ state }){
        <div className="profile-info">
         <div className="flex justify-center items-center gap-2">
           <div className="rounded-full h-8 w-8">
-            {state.user?.gender === "male" ? (
-              <img className="pf-image" src={male} />
-            ): (<img className="pf-image" src={female}/>)}
+            circle
           </div>
           <div className="flex flex-col">
             <p className="font-semibold ">{state.user?.name}</p>

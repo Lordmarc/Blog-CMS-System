@@ -5,6 +5,7 @@ import { IoSend } from "react-icons/io5";
 import Breadcrumb from "./Breadcrumb";
 import { AuthContext } from "../auth/AuthProvider";
 import UserComment from "./UserComment";
+import { supabase } from "../lib/supabase";
 
 export default function SinglePost() {
   const { state } = useContext(AuthContext);
@@ -29,8 +30,13 @@ export default function SinglePost() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await api.get(`/public/posts/slug/${slug}`);
-        setPost(res.data);
+        const { data:postData, error} = await supabase
+        .from("posts")
+        .select(`*,
+          user:user_id(id,name)`)
+        .eq("slug", slug)
+        .single();
+        setPost(postData);
       } catch (err) {
         setError(err.message || "Post not found");
       } finally {
@@ -90,7 +96,7 @@ export default function SinglePost() {
 
       {/* Cover Image */}
       <img
-        src={`${import.meta.env.VITE_BASE_URL}/storage/${post.image}`}
+        src={post.image}
         alt={post.title}
         className="w-full h-96 object-cover rounded-lg"
       />

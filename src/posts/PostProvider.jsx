@@ -16,8 +16,7 @@ export default function PostProvider({ children }){
         .select(`*,
           user:user_id(
           id,
-          name,
-          gender)`)
+          name)`)
         .order("created_at", {ascending: false});
 
         if(error) throw error;

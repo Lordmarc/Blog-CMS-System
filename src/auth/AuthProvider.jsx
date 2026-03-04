@@ -19,47 +19,21 @@ export default function AuthProvider({ children }) {
 
         try {
           if (session?.user) {
-            let role = "user";
-
-            // ✅ Kung bagong user, i-insert sa profiles
-            if (event === "SIGNED_IN") {
-              const isNewUser = new Date() - new Date(session.user.created_at) < 10000;
-              if (isNewUser) {
-                const { error: insertError } = await supabase.from("profiles").insert([
-                  {
-                    id: session.user.id,
-                    role: "user",
-                    gender: "male",
-                  }
-                ]);
-
-                if (insertError) {
-                  console.error("Failed to insert profile:", insertError);
-                } else {
-                  console.log("Profile inserted successfully!");
-                }
-              }
-            }
-
-            // ✅ Fetch role para sa lahat ng users
-            try {
-              const { data: profileData, error: roleError } = await supabase
-                .from("profiles")
-                .select("role")
-                .eq("id", session.user.id)
-                .single();
-
-              if (!roleError && profileData?.role) {
-                role = profileData.role;
-              }
-            } catch (err) {
-              console.warn("Failed to fetch role:", err.message);
-            }
+            // Fetch role from profiles
+            const { data: profileData } = await supabase
+              .from("profiles")
+              .select("role, name")
+              .eq("id", session.user.id)
+              .single();
 
             dispatch({
               type: "LOGIN_SUCCESS",
               payload: {
-                user: { ...session.user, role },
+                user: { 
+                  ...session.user, 
+                  role: profileData?.role ?? "user",
+                  name: profileData?.name ?? "",
+                },
                 token: session.access_token,
               },
             });
@@ -67,7 +41,6 @@ export default function AuthProvider({ children }) {
             dispatch({ type: "LOGOUT" });
           }
         } finally {
-          console.log("Dispatching AUTH_CHECK_DONE");
           dispatch({ type: "AUTH_CHECK_DONE" });
         }
       });
