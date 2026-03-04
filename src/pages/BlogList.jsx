@@ -1,10 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import CardLandscape from "../components/CardLandscape";
 import { PostContext } from "../posts/PostProvider";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination";
 import { RxMagnifyingGlass } from "react-icons/rx";
 import api from "../api/axios";
-import PostCard from "../components/PostCard";
+
 
 export default function BlogList(){
   const { state } = useContext(PostContext)
