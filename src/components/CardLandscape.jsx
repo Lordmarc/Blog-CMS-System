@@ -8,7 +8,7 @@ export default function CardLandscape({ state }) {
   return (
     <div className="flex  gap-4 bg-white p-4 rounded-md w-full shadow">
       <div className="h-40 w-40 rounded-md overflow-hidden">
-        <img src={`${import.meta.env.VITE_BASE_URL}/storage/${state.image}`} className="h-full w-full object-cover" alt="" />
+        <img src={state.image} className="h-full w-full object-cover object-center" alt="" />
       </div>
       <div className="flex flex-1 flex-col ">
         <p className=" text-lg md:text-xl font-semibold">{state.title}</p>

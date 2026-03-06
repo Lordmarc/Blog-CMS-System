@@ -28,6 +28,11 @@ export default function SinglePost() {
 
   // Fetch post
   useEffect(() => {
+
+    setLoading(true);
+    setPost(null);
+    setError(null);
+
     const fetchPost = async () => {
       try {
         const { data:postData, error} = await supabase
@@ -51,8 +56,15 @@ export default function SinglePost() {
   const fetchComments = async () => {
     if (!post) return;
     try {
-      const res = await api.get(`/public/posts/${post.id}/comments`);
-      setComments(res.data);
+      const { data: commentData, error } = await supabase
+      .from("comments")
+      .select(`*,
+        user:user_id(id, name)`)
+      .eq("post_id", post.id)
+      .order("created_at", {ascending:false})
+
+      if(error) throw error;
+      setComments(commentData);
     } catch (err) {
       console.error("Failed to fetch comments:", err);
     }
@@ -70,12 +82,21 @@ export default function SinglePost() {
     if (!textareaRef.current.value.trim()) return console.warn("Cannot post empty comment");
 
     try {
-      await api.post(`/v1/posts/${post.id}/comment`, {
-        comment: textareaRef.current.value,
-      });
+      const {error} = await supabase
+      .from('comments')
+      .insert([
+        {
+          post_id: post.id,
+          user_id: state.user.id,
+          comment: textareaRef.current.value.trim(),
+        }
+
+      ])
+
+      if(error) throw error;
 
       textareaRef.current.value = "";
-      fetchComments(); // Refresh after posting
+      fetchComments();
     } catch (err) {
       console.error("Failed to post comment:", err.response?.data || err.message);
     }
@@ -95,11 +116,14 @@ export default function SinglePost() {
       <Breadcrumb />
 
       {/* Cover Image */}
-      <img
+      <div className="h-52 w-80 md:w-full md:h-96">
+        <img
         src={post.image}
         alt={post.title}
-        className="w-full h-96 object-cover rounded-lg"
-      />
+        className="w-full h-full object-cover  rounded-lg"
+        />
+      </div>
+      
 
       {/* Title */}
       <h1 className="text-3xl font-bold mt-6">{post.title}</h1>

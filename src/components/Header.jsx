@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Header() {
   return (
     <div
@@ -16,7 +18,7 @@ export default function Header() {
       </div>
 
       <div className="w-full max-w-xs flex gap-2">
-        <button className="flex-1 flex items-center justify-center rounded-lg bg-[#1223e0] px-2 py-1 h-12 md:px-6 md:py-3 text-sm md:text-base font-bold text-white shadow-lg transition-all hover:translate-y-[-2px]">View All Posts</button>
+        <Link to="/blog" className="flex-1 flex items-center justify-center rounded-lg bg-[#1223e0] px-2 py-1 h-12 md:px-6 md:py-3 text-sm md:text-base font-bold text-white shadow-lg transition-all hover:translate-y-[-2px]">View All Posts</Link>
         <button className="flex-1 flex items-center justify-center rounded-lg bg-white/10 px-2 py-1 md:px-6 md:py-3 text-sm md:text-base font-bold text-white backdrop-blur-sm transition-all hover:bg-white/20">
                                 Subscribe </button>
       </div>
