@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 
 export default function ManagePosts() {
-  const { state, dispatch } = useContext(PostContext);
+  const { state, dispatch, fetchPosts } = useContext(PostContext);
   const [active, setActive] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
   const [search, setSearch] = useState("");
@@ -17,6 +17,10 @@ export default function ManagePosts() {
     { name: "Published", count: state.published },
     { name: "Draft", count: state.drafts },
   ];
+
+  console.log("state.posts:", state.posts);
+console.log("state.published:", state.published);
+console.log("state.drafts:", state.drafts);
 
   const handleClick = (type) => {
     setActive(type)
@@ -67,7 +71,9 @@ export default function ManagePosts() {
           lastIndex={indexOfLastPost} 
           currentPage={currentPage} 
           handleCurrentPage={setCurrentPage} 
-          totalPages={totalPages}/>
+          totalPages={totalPages}
+          fetch={fetchPosts}/>
+      
     </div>
   );
 }

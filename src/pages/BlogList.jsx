@@ -58,7 +58,7 @@ export default function BlogList(){
         <div className="flex-1 flex flex-col gap-4 h-full w-full max-w-lg">
           { currentPosts.map(post => (
             <CardLandscape key={post.id} state={post} />
-          )) }
+          )) }                         
           <div className="mt-auto">
             <Pagination  firstIndex={indexOfFirstPost} lastIndex={indexOfLastPost} currentPage={currentPage} handleCurrentPage={setCurrentPage} totalPages={totalPages} totalPosts={totalPosts} />
 

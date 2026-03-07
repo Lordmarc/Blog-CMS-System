@@ -12,7 +12,7 @@ export default function AdminPage(){
 
       <div className="flex-1 w-full flex">
         <Sidebar/>
-        <div className="flex-1">
+        <div className="flex-1 ">
             <Routes>
             <Route path="" element={ <Dashboard/>}/>
               <Route path="create-post"  element={<PostForm/>} />

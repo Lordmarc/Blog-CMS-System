@@ -10,7 +10,7 @@ export default function Dashboard(){
   <div>
       
       <DashboardStats/>
-      <div className="flex px-8 gap-4">
+      <div className="flex px-8 pb-8 gap-4">
         <RecentActivity/>
         <QuickDraft/>
       </div>

@@ -1,6 +1,26 @@
 import Pagination from "./Pagination";
+import { MdDeleteOutline } from "react-icons/md";
+import { MdOutlineEdit } from "react-icons/md";
 
-export default function PostTable({ totalPosts, currentPosts, firstIndex, lastIndex, currentPage, handleCurrentPage,totalPages }){
+import { Link } from "react-router-dom";
+import { supabase } from "../lib/supabase";
+import { useContext } from "react";
+import PostProvider from "../posts/PostProvider";
+
+
+export default function PostTable({ totalPosts, currentPosts, firstIndex, lastIndex, currentPage, handleCurrentPage,totalPages, fetch }){
+
+
+
+  const handleDeletePost = async (id) => {
+    const { error } = await supabase
+    .from("posts")
+    .delete()
+    .eq('id', id);
+
+    if (error) throw error;
+    fetch();
+  }
   return(
     <div className="relative overflow-x-auto bg-white shadow rounded border border-gray-300">
         <table className="w-full text-sm text-left rtl:text-right text-body">
@@ -39,8 +59,9 @@ export default function PostTable({ totalPosts, currentPosts, firstIndex, lastIn
                 </td>
                 <td>N/A</td>
                 <td>
-                  <div>
-                    <button></button>
+                  <div className="flex gap-2 text-xl ">
+                    <Link className="text-green-300 p-1 shadow-md rounded-md border border-slate-200"><MdOutlineEdit/></Link>
+                    <button className="text-red-400 p-1 shadow-md rounded-md border border-slate-200" onClick={() => handleDeletePost(item.id)}><MdDeleteOutline/></button>
                   </div>
                 </td>
               </tr>

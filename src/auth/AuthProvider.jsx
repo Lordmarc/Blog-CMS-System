@@ -43,7 +43,7 @@ export default function AuthProvider({ children }) {
         } finally {
           dispatch({ type: "AUTH_CHECK_DONE" });
         }
-      });
+      }); 
 
       listener = data;
     };

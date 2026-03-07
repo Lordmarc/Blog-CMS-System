@@ -4,16 +4,17 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../auth/AuthProvider";
 import { IoIosMenu } from "react-icons/io";
 import { IoClose } from "react-icons/io5";
+import { supabase } from "../lib/supabase";
 
 
 
 export default function Navbar(){
   const { state, dispatch } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
-  const handleLogout = () => {
+  const handleLogout = async() => {
+    await supabase.auth.signOut();
     dispatch({ type: "LOGOUT" })
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+
   }
 
   useEffect(() => {

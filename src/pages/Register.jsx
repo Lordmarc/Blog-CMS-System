@@ -4,6 +4,8 @@ import { FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../auth/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabase";
+import { createAvatar } from "@dicebear/core";
+import { avataaars } from "@dicebear/collection";
 
 export default function Register(){
   const { state, dispatch } = useContext(AuthContext);
@@ -21,13 +23,21 @@ export default function Register(){
 
   const handleRegister = async (e) => {
   e.preventDefault();
+
+  const avatarSeed = Math.random().toString(36).substring(2,8);
+  const avatar = createAvatar(avataaars, {
+    seed: avatarSeed
+  });
+
+  const avatarUrl = avatar.toDataUri();
   console.log("handleRegister called"); 
  const { error } = await supabase.auth.signUp({
   email,
   password,
   options: {
     data:{
-      name: name
+      name: name,
+      avatar:avatarUrl
     }
   }
 });

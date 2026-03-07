@@ -69,6 +69,10 @@ export default function Login() {
         </div>
 
         <button type="submit" className="login-btn my-4">Sign In</button>
+        <div className="flex items-center gap-1">
+          <p>Don't have an account? </p>
+          <Link to="/register" className="text-blue-500 hover:underline">Sign up</Link>
+        </div>
       </form>
     </div>
   );

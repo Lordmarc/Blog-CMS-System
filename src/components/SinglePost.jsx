@@ -6,6 +6,7 @@ import Breadcrumb from "./Breadcrumb";
 import { AuthContext } from "../auth/AuthProvider";
 import UserComment from "./UserComment";
 import { supabase } from "../lib/supabase";
+import { comment } from "postcss";
 
 export default function SinglePost() {
   const { state } = useContext(AuthContext);
@@ -38,7 +39,7 @@ export default function SinglePost() {
         const { data:postData, error} = await supabase
         .from("posts")
         .select(`*,
-          user:user_id(id,name)`)
+          user:user_id(id, name, avatar)`)
         .eq("slug", slug)
         .single();
         setPost(postData);
@@ -59,8 +60,11 @@ export default function SinglePost() {
       const { data: commentData, error } = await supabase
       .from("comments")
       .select(`*,
-        user:user_id(id, name)`)
+        user:user_id(id, name, avatar),
+        replies:comments(*,
+        user:user_id(id,name,avatar))`)
       .eq("post_id", post.id)
+      .is("parent_id", null)
       .order("created_at", {ascending:false})
 
       if(error) throw error;
@@ -81,25 +85,59 @@ export default function SinglePost() {
     if (!state.user) return console.warn("You must be logged in to comment");
     if (!textareaRef.current.value.trim()) return console.warn("Cannot post empty comment");
 
+    const commentText =  textareaRef.current.value.trim();
+
+    const tempComment = {
+      id: `temp-${Date.now()}`,
+      post_id: post.id,
+      user_id: state.user.id,
+      comment: commentText,
+      created_at: new Date().toISOString(),
+      user: {
+        id: state.user.id,
+        name: state.user.name
+      }
+    }
+
+    setComments(prev => [tempComment, ...prev]);
+    textareaRef.current.value = "";
+
     try {
-      const {error} = await supabase
+      const {data:commentData, error} = await supabase
       .from('comments')
       .insert([
         {
           post_id: post.id,
           user_id: state.user.id,
-          comment: textareaRef.current.value.trim(),
+          comment: commentText,
         }
 
-      ])
+      ]).select().single();
 
       if(error) throw error;
+      
+       await supabase
+      .from('activity_logs')
+      .insert([
+        {
+          type: 'Comment',
+          action:  'Created',
+          description: commentText,
+          user_id: state.user.id,
+          meta:{
+            post_id: post.id,
+            comment_id: commentData.id
+          }
+        }
+      ])
 
-      textareaRef.current.value = "";
+
       fetchComments();
     } catch (err) {
-      console.error("Failed to post comment:", err.response?.data || err.message);
+      setComments(prev => prev.filter(c => c.id !== tempComment.id));
+      console.error("Failed to  comment:", err.response?.data || err.message);
     }
+
   };
 
   const handleInput = () => {
@@ -163,7 +201,7 @@ export default function SinglePost() {
         {/* Comments List */}
         <div className="comments flex flex-col gap-4">
           {comments.map((c) => (
-            <UserComment key={c.id} comment={c} refreshComments={fetchComments} state={state}/>
+            <UserComment key={c.id} comment={c} refreshComments={fetchComments} post={post} state={state}/>
           ))}
         </div>
       </div>

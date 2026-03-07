@@ -5,6 +5,7 @@ import { MdDashboard } from "react-icons/md";
 import { VscTerminalCmd } from "react-icons/vsc";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../auth/AuthProvider";
+import { supabase } from "../lib/supabase";
 
 export default function Sidebar() {
   const { dispatch } = useContext(AuthContext);
@@ -14,7 +15,8 @@ export default function Sidebar() {
     { name: "Dashboard", path: "/dashboard", icon: <MdDashboard /> },
     { name: "Posts", path: "/dashboard/manage-posts", icon: <BiSolidDetail /> },
   ];
-  const handleLogout = () => {
+  const handleLogout = async() => {
+    await supabase.auth.signOut();
     dispatch({ type: "LOGOUT" });
     navigate("/");
   };

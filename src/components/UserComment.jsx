@@ -1,11 +1,14 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
 import api from "../api/axios";
+import { supabase } from "../lib/supabase";
 
 dayjs.extend(relativeTime);
+dayjs.extend(utc);
 
-export default function UserComment({ comment, refreshComments, state }) {
+export default function UserComment({ comment, refreshComments, state, post }) {
   const [showReply, setShowReply] = useState(false);
   const [replyText, setReplyText] = useState("");
 
@@ -13,14 +16,21 @@ export default function UserComment({ comment, refreshComments, state }) {
   const female = "/assets/female.jpg";
 
   const submitReply = async () => {
+
     if(!state.isAuthenticated) return alert('Login first to comment');
     if (!replyText.trim()) return;
 
     try {
-      await api.post(`/public/posts/${comment.post_id}/comment`, {
-        comment: replyText,
-        parent_id: comment.id,
-      });
+      const { error } = await supabase
+      .from('comments')
+      .insert([
+        {
+          post_id: post.id,
+          user_id: state.user.id,
+          parent_id: comment.parent_id ?? comment.id,
+          comment: replyText
+        }
+      ]);
 
       setReplyText("");
       setShowReply(false);
@@ -28,6 +38,8 @@ export default function UserComment({ comment, refreshComments, state }) {
     } catch (err) {
       console.error("Failed to post reply:", err.response?.data || err.message);
     }
+
+
   };
 
   return (
@@ -35,7 +47,7 @@ export default function UserComment({ comment, refreshComments, state }) {
       <div className="rounded-full h-8 w-8 overflow-hidden">
         <img
           className="h-full w-full object-cover"
-          src={comment.user?.gender === "male" ? male : female}
+          src={comment.user?.avatar}
         />
       </div>
 
@@ -45,7 +57,8 @@ export default function UserComment({ comment, refreshComments, state }) {
           <p className="text-lg font-semibold">
             {comment.user.name.charAt(0).toUpperCase() + comment.user.name.slice(1)}
           </p>
-          <span className="text-gray-500">{dayjs(comment.created_at).fromNow()}</span>
+          <span className="text-gray-500">{dayjs.utc(comment.created_at).local().fromNow()}</span>
+
         </div>
 
         {/* Comment body */}
@@ -96,7 +109,7 @@ export default function UserComment({ comment, refreshComments, state }) {
         {comment.replies?.length > 0 && (
           <div className="ml-6 border-l pl-4 mt-2 flex flex-col gap-2">
             {comment.replies.map((reply) => (
-              <UserComment key={reply.id} comment={reply} refreshComments={refreshComments} />
+              <UserComment key={reply.id} comment={reply} refreshComments={refreshComments} post={post} state={state}/>
             ))}
           </div>
         )}

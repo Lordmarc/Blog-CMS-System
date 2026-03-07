@@ -15,6 +15,8 @@ export default function PostCard({ state }){
       year: 'numeric'
     });
   };
+
+  console.log("User state:", state)
   return ( 
     <div className="post-card">
       <div className="h-44 w-full">
@@ -27,7 +29,7 @@ export default function PostCard({ state }){
        <div className="profile-info">
         <div className="flex justify-center items-center gap-2">
           <div className="rounded-full h-8 w-8">
-            circle
+            <img src={state.user.avatar}/>
           </div>
           <div className="flex flex-col">
             <p className="font-semibold ">{state.user?.name}</p>

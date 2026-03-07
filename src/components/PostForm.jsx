@@ -23,18 +23,11 @@ export default function PostForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("1. handleSubmit called");
-    console.log("2. authState:", authState);
-    console.log("3. state:", state);
 
     if (!authState?.isAuthenticated) {
     alert("You must be logged in to post.");
     return;
     }
-    console.log("4. passed auth check");  // ← add dito
-    console.log("5. state.image:", state.image);  // ← add dito
-
-
 
   try {
       console.log("6. inside try block"); 
@@ -63,10 +56,11 @@ export default function PostForm() {
           user_id: authState.user.id,
           title: state.title,
           content: state.content,
+          status: "Published",
           slug: slug,
           image: imageUrl,
           tags: tagsArray,
-        }
+        } 
       ]).select().single();
       console.log("insert result:", postData, error);
 

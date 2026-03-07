@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="body">
       {showNavbar && <Navbar />}
-      <div className="flex-1 p-4 md:p-0 h-full flex flex-col">
+      <div className="flex-1 p-4 h-full flex flex-col">
         <Routes>
           <Route
             path="/"
