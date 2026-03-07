@@ -23,7 +23,7 @@ export default function DashboardStats(){
         </div>
         <div className="ml-auto flex items-center gap-2">
           <button className="bg-white">Export Data</button>
-          <Link to="create-post" className="inline-flex place-items-center bg-[#001BB7] text-white">
+          <Link to="create-post" className="inline-flex place-items-center rounded-md py-1 px-2 border border-gray-300 bg-[#001BB7] text-white text-sm">
             <GoPlus/>
             New Post
           </Link>

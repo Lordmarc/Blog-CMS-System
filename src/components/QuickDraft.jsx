@@ -1,30 +1,60 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import api from "../api/axios";
+import { supabase } from "../lib/supabase";
+import { AuthContext } from "../auth/AuthProvider";
 
 export default function QuickDraft(){
+  const { state } = useContext(AuthContext);
   const titleRef = useRef(null);
   const contentRef= useRef(null);
-  const statusRef = useRef("Draft");
+
     
 
     const handleSubmit = async(e) =>{
       e.preventDefault();
       
-      const payload = {
-        title: titleRef.current.value,
-        content: contentRef.current.value,
-        status: statusRef.current
-      }
-
       try{
-        const res = await api.post("/v1/posts", payload);
+
+      const slug = titleRef.current.value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9\s-]/g, "")   // remove special characters
+      .replace(/\s+/g, "-")            // spaces to dashes
+      .replace(/-+/g, "-");    
         
+        const { data:postData, error } = await supabase
+        .from("posts")
+        .insert([
+          {
+            user_id: state.user.id,
+            title: titleRef.current.value.trim(),
+            content: contentRef.current.value.trim(),
+            status: "Draft",
+            slug: slug,
+          }
+        ]).select().single();
+
+        await supabase
+        .from('activity_logs')
+        .insert([
+          {
+            type: "Post",
+            action: "Draft",
+            description: titleRef.current.value.trim(),
+            user_id: state.user.id,
+            meta: {
+              post_id: postData.id
+            }
+          }
+        ])
+        
+        titleRef.current.value = "";
+        contentRef.current.value = "";
       }catch(err){
         console.error("Failed to save draft.", err);
       }
 
-      titleRef.current.value = "";
-      contentRef.current.value = "";
+      
     }
 
 

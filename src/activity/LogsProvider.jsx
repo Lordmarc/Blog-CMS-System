@@ -28,7 +28,7 @@ export default function LogsProvider({ children }){
         .order('created_at', {ascending:false})
         .limit(20);
 
-        if(error) alert(error.message);
+        if(error) throw error;
 
         
         dispatch({ type: "SET_LOGS", payload: data });
@@ -38,8 +38,14 @@ export default function LogsProvider({ children }){
     }
     fetchActivityLogs();
 
-    const interval = setInterval(fetchActivityLogs, 5000);
-    return () => clearInterval(interval);
+   const channel = supabase
+    .channel('activity_logs')
+    .on('postgres_changes', 
+      { event: 'INSERT', schema: 'public', table: 'activity_logs' },
+      () => fetchActivityLogs()
+    )
+    .subscribe();
+    return () => supabase.removeChannel();
   },[authState?.isAuthenticated, authState?.user?.role]);
   return(
     <LogsContext.Provider value={{ state, dispatch }}>

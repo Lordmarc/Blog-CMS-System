@@ -31,7 +31,7 @@ export default function UserProvider({ children }){
     fetchUser();
   }, [authState?.isAuthenticated, authState?.user?.role]);
 
-  console.log(state.totalUsers)
+
   return(
     <UserContext.Provider value={{ state, dispatch }}>
       { children }

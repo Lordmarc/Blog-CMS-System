@@ -8,7 +8,7 @@ dayjs.extend(relativeTime);
 
 export default function RecentActivity() {
   const { state: logState } = useContext(LogsContext);
-  const { state: authState } = useContext(AuthContext);
+  
   const [visibleCount, setVisibleCount] = useState(5);
   const [toggle, setToggle] = useState(false);
   const viewAll = () => {

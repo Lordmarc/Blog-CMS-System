@@ -15,7 +15,7 @@ export default function AuthProvider({ children }) {
       await supabase.auth.initialize();
 
       const { data } = supabase.auth.onAuthStateChange(async (event, session) => {
-        console.log("Auth state changed:", event, session);
+
 
         try {
           if (session?.user) {

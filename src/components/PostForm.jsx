@@ -13,7 +13,7 @@ export default function PostForm() {
   const handleImageChange = (e) => { 
     const file = e.target.files[0];
     if (!file) return;
-
+ 
     dispatch({
       type: "SET_IMAGE",
       file,

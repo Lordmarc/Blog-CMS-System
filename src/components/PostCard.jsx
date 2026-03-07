@@ -16,7 +16,7 @@ export default function PostCard({ state }){
     });
   };
 
-  console.log("User state:", state)
+
   return ( 
     <div className="post-card">
       <div className="h-44 w-full">
